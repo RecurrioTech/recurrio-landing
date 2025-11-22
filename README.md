@@ -1,1 +1,1 @@
-Landing page for Recurrio
+Landing page for Recurrio.
