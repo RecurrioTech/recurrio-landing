@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recurrio | Optimize your SaaS spending</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-yKL2WTMBl3bj0dKwij-c0.js"></script>
+    <script>
+        window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function (i) { plausible.o = i || {} };
+        plausible.init()
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        brand: {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            accent: '#8b5cf6', // Violet for AI/Agency vibes
+                            danger: '#ef4444'  // Red for the bleeding cash metaphor
+                        }
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .glass-input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .alert-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(239, 68, 68, 0.05) 10px, rgba(239, 68, 68, 0.05) 20px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-950 text-slate-50 antialiased selection:bg-brand-600 selection:text-white flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-lg transition-all duration-300"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Area -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <!-- Placeholder for Logo Image -->
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center shadow-lg shadow-brand-500/20 group hover:scale-105 transition-transform">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 text-white fill-current"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-white">Recurrio</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#platform"
+                        class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Platform</a>
+                    <a href="#agencies"
+                        class="text-sm font-medium text-slate-300 hover:text-white transition-colors">For Agencies</a>
+                    <a href="#businesses"
+                        class="text-sm font-medium text-slate-300 hover:text-white transition-colors">For Business</a>
+                    <a href="#waitlist"
+                        class="bg-white text-slate-950 hover:bg-slate-200 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-white/10">
+                        Get Early Access
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-slate-400 hover:text-white p-2">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand-600/10 rounded-full blur-[120px] -z-10 pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1] animate-fade-up"
+                style="animation-delay: 100ms;">
+                Stop Bleeding Cash on <br>
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-accent to-indigo-500">Forgotten
+                    Subscriptions</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-up"
+                style="animation-delay: 200ms;">
+                Your finance team is drowning in subscription chaos—duplicate tools, zombie licenses, and renewals no
+                one approved.
+                <span class="text-slate-200 font-medium">Recurrio is your intelligent co-pilot</span> that discovers
+                hidden waste and gives you complete control over every dollar spent.
+            </p>
+
+            <!-- Email Capture Form (Hero) -->
+            <div class="max-w-md mx-auto mb-8 animate-fade-up" style="animation-delay: 300ms;" id="waitlist">
+                <form class="flex flex-col sm:flex-row gap-3" onsubmit="handleWebhook(event)">
+                    <input type="email" placeholder="Enter your work email..." required
+                        class="glass-input flex-1 px-5 py-4 rounded-xl text-sm transition-all focus:ring-2 ring-brand-500/50">
+                    <button type="submit"
+                        class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg shadow-brand-600/25 whitespace-nowrap">
+                        Get Early Access
+                    </button>
+                </form>
+                <div class="flex items-center justify-center gap-2 mt-4 text-xs text-slate-500">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-brand-500"></i>
+                    <span>Join waitlist for <span
+                            class="text-slate-300 font-medium underline decoration-slate-700 underline-offset-2">Priority
+                            Early Access</span></span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Platform Layers Section -->
+    <section id="platform" class="py-24 bg-slate-950 border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-brand-500 font-semibold tracking-wide uppercase mb-2">Platform Architecture
+                </h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white">Three Layers of Control</h3>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">From manual tracking to automated intelligence,
+                    Recurrio scales with your complexity.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Layer 1: Core -->
+                <div
+                    class="bg-slate-900 rounded-2xl p-8 border border-white/5 hover:border-brand-500/30 transition-colors">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center mb-6 border border-white/10">
+                        <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-4">Core Tracking & Collaboration</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>Unified Dashboard:</strong> Single-pane-of-glass view of all recurring
+                                expenses.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>Secure Vault:</strong> Encrypted storage for contracts, passwords, and
+                                invoices.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>Smart Alerts:</strong> Configurable 30/60/90-day renewal notifications.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Layer 2: Automation -->
+                <div class="bg-slate-900 rounded-2xl p-8 border border-brand-500/20 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-brand-600/5 group-hover:bg-brand-600/10 transition-colors"></div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-brand-900/50 flex items-center justify-center mb-6 border border-brand-500/30 relative z-10">
+                        <i data-lucide="cpu" class="w-6 h-6 text-brand-400"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-4 relative z-10">Automation & Intelligence</h4>
+                    <ul class="space-y-3 relative z-10">
+                        <li class="flex items-start gap-3 text-sm text-slate-300">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-brand-400 mt-0.5"></i>
+                            <span><strong>Auto-Discovery:</strong> Seamless integration with Identity Providers &
+                                Accounting Software.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-300">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-brand-400 mt-0.5"></i>
+                            <span><strong>Price Benchmarking:</strong> Compare unit pricing against market
+                                averages.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-300">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-brand-400 mt-0.5"></i>
+                            <span><strong>Usage Analytics:</strong> Identify underutilized licenses and zombie
+                                accounts.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Layer 3: Agency -->
+                <div
+                    class="bg-slate-900 rounded-2xl p-8 border border-white/5 hover:border-brand-500/30 transition-colors">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center mb-6 border border-white/10">
+                        <i data-lucide="network" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-4">Agency & Enterprise</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>Multi-Org Dashboard:</strong> Manage dozens of client portfolios in one
+                                interface.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>Client Portals:</strong> Secure, branded views for your clients to track
+                                spend.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-slate-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 mt-0.5"></i>
+                            <span><strong>White-Label Reporting:</strong> automated PDF reports with your agency
+                                logo.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission / Problem Section -->
+    <section id="mission" class="py-24 bg-slate-900 border-y border-white/5 relative alert-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6">The cost of chaos is <br><span
+                            class="text-brand-danger">higher than you think.</span></h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center border border-white/10">
+                                <i data-lucide="credit-card" class="w-6 h-6 text-slate-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-200 mb-2">Shadow IT & Personal Cards</h3>
+                                <p class="text-slate-400 leading-relaxed">Employees buying software on personal cards
+                                    that Finance never approved creates security risks and budget leaks.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center border border-white/10">
+                                <i data-lucide="copy" class="w-6 h-6 text-slate-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-200 mb-2">Duplicate Tools</h3>
+                                <p class="text-slate-400 leading-relaxed">Marketing uses Asana. Product uses Jira. Sales
+                                    uses Trello. You are paying for three tools when one would do.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-brand-500/20 blur-[100px] rounded-full"></div>
+                    <div class="relative bg-slate-950 border border-white/10 rounded-2xl p-8 shadow-2xl">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">The Recurrio Standard</h3>
+                        </div>
+                        <ul class="space-y-6">
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1">
+                                    <i data-lucide="file-key" class="w-5 h-5 text-brand-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold text-sm">Secure Document Vault</h4>
+                                    <p class="text-slate-400 text-xs mt-1 leading-relaxed">Centralized, encrypted
+                                        storage for all contracts, invoices, and credentials.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-brand-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold text-sm">Real-Time Price Benchmarking</h4>
+                                    <p class="text-slate-400 text-xs mt-1 leading-relaxed">Know instantly if you're
+                                        overpaying compared to market averages.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1">
+                                    <i data-lucide="bell-ring" class="w-5 h-5 text-brand-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold text-sm">Proactive Renewal Alerts</h4>
+                                    <p class="text-slate-400 text-xs mt-1 leading-relaxed">Get notified <strong>60 days
+                                            before renewals</strong> so you negotiate from strength.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scale Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Built for every scale</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Whether you manage one portfolio or fifty, Recurrio adapts
+                    to your needs.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Agencies (Highlighted) -->
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-colors"
+                    id="agencies">
+                    <div
+                        class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        Unique Niche</div>
+                    <div class="w-12 h-12 rounded-lg bg-brand-500/10 flex items-center justify-center mb-6">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-brand-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">For Agencies</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Create operational stickiness and drive organic revenue. The only platform built for
+                        professional portfolio management.
+                    </p>
+                    <ul class="space-y-2 mb-8">
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-brand-500"></i> White-label Reporting</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-brand-500"></i> Client Access Portals</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-brand-500"></i> High Unit Economics</li>
+                    </ul>
+                </div>
+
+                <!-- SMEs -->
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-colors"
+                    id="businesses">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-6">
+                        <i data-lucide="building-2" class="w-6 h-6 text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">For SMEs</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Gain control of your burn rate. Identify shadow IT and forgotten subscriptions instantly.
+                    </p>
+                    <ul class="space-y-2 mb-8">
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-emerald-500"></i> Instant Discovery</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-emerald-500"></i> Duplicate Alerts</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-emerald-500"></i> Renewal Reminders</li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise -->
+                <div
+                    class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-6">
+                        <i data-lucide="globe" class="w-6 h-6 text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">For Enterprise</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Enforce compliance and optimize spend across hundreds of departments and cost centers.
+                    </p>
+                    <ul class="space-y-2 mb-8">
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-purple-500"></i> SSO & Audit Logs</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-purple-500"></i> Departmental Chargebacks</li>
+                        <li class="text-xs text-slate-300 flex gap-2"><i data-lucide="chevron-right"
+                                class="w-4 h-4 text-purple-500"></i> Custom Procurement Flows</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-brand-900/20"></div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Be the first to optimize.</h2>
+            <p class="text-lg text-slate-300 mb-10">
+                We are currently onboarding select agencies and businesses. <br>
+                Secure your spot on the waitlist today.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="handleWebhook(event)">
+                <input type="email" placeholder="work@company.com" required
+                    class="glass-input flex-1 px-5 py-4 rounded-xl text-sm transition-all focus:ring-2 ring-brand-500/50">
+                <button type="submit"
+                    class="bg-white text-slate-950 hover:bg-slate-200 px-8 py-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg">
+                    Get Early Access
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-white/10 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 text-white fill-current"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" />
+                            </svg>
+                        </div>
+                        <span class="font-bold text-xl text-white">Recurrio</span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed max-w-sm">
+                        The intelligent operating system for recurring revenue and subscription management.
+                        Active partner to Agencies, SMEs, and Enterprise.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Features</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">For Agencies</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Security</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Blog</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">About Us</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Contact</a></li>
+                        <li><a href="#" class="text-slate-500 hover:text-brand-400 text-sm">Terms & Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-600 text-xs">© 2025 Recurrio Ltd. All rights reserved. Registered in the UK.</p>
+                <div class="flex gap-4">
+                    <a href="https://x.com/team_recurrio" class="text-slate-600 hover:text-white transition-colors"><i data-lucide="twitter"
+                            class="w-4 h-4"></i></a>
+                    <a href="https://www.linkedin.com/company/recurrioltd" class="text-slate-600 hover:text-white transition-colors"><i data-lucide="linkedin"
+                            class="w-4 h-4"></i></a>
+                    <a href="https://github.com/RecurrioTech" class="text-slate-600 hover:text-white transition-colors"><i data-lucide="github"
+                            class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Handle Form Submission to Make Webhook
+        async function handleWebhook(event) {
+            event.preventDefault();
+            const form = event.target;
+            const emailInput = form.querySelector('input[type="email"]');
+            const email = emailInput.value;
+            const button = form.querySelector('button');
+            const originalText = button.innerText;
+
+            if (!email) return;
+
+            // Update UI to show loading state
+            button.innerText = 'Joining...';
+            button.disabled = true;
+            button.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Use Vercel Proxy endpoint
+            const webhookUrl = '/api/submit';
+            const data = {
+                timestamp: new Date().toISOString(),
+                email_address: email
+            };
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                form.reset();
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                // Reset button state
+                button.innerText = originalText;
+                button.disabled = false;
+                button.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
